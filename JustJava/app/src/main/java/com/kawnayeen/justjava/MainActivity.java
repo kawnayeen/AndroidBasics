@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDisplayPrice(int number) {
-        priceTv.setText(NumberFormat.getCurrencyInstance().format(number));
+        String str = "Total: " + NumberFormat.getCurrencyInstance().format(number) + "\nThank you!";
+        priceTv.setText(str);
     }
 }
