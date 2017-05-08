@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button decrementBtn;
 
     private int numberOfCoffees;
+    private String name = "Kawnayeen";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void submitOrder() {
-        String str = "Total :" + NumberFormat.getCurrencyInstance().format(calculatePrice());
+        String str = "";
+        str += "Name : "+name;
+        str += "\nQuantity : "+numberOfCoffees;
+        str += "\nTotal :" + NumberFormat.getCurrencyInstance().format(calculatePrice());
         str += "\nThank you!";
         displayMessage(str);
     }
