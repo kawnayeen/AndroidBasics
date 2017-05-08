@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         numberOfCoffees = 2;
-        orderBtn.setOnClickListener(v -> updateQuantityAndPrice());
+        orderBtn.setOnClickListener(v -> submitOrder());
         incrementBtn.setOnClickListener(v -> incrementOrder());
         decrementBtn.setOnClickListener(v -> decrementOrder());
     }
@@ -50,18 +50,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void submitOrder() {
+        String str = "Total :" + NumberFormat.getCurrencyInstance().format(calculatePrice());
+        str += "\nThank you!";
+        displayMessage(str);
+    }
+
     private void updateQuantityAndPrice() {
         setQuantityText(numberOfCoffees);
-        setDisplayPrice(numberOfCoffees * 5);
+        displayMessage(NumberFormat.getCurrencyInstance().format(calculatePrice()));
+    }
+
+    private int calculatePrice() {
+        return numberOfCoffees * 5;
     }
 
     private void setQuantityText(int quantity) {
-        String quantityStr = "" + quantity;
-        quantityTv.setText(quantityStr);
+        quantityTv.setText(String.valueOf(quantity));
     }
 
-    private void setDisplayPrice(int number) {
-        String str = "Total: " + NumberFormat.getCurrencyInstance().format(number) + "\nThank you!";
-        priceTv.setText(str);
+    private void displayMessage(String message) {
+        priceTv.setText(message);
     }
 }

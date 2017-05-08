@@ -65,7 +65,7 @@
         android:textColor="@android:color/black"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:text="Total: $10\nThank you!"
+        android:text="$10"
         android:textSize="16sp" />
 
     <Button
