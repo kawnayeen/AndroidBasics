@@ -1,6 +1,8 @@
 package com.kawnayeen.justjava;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -93,7 +95,16 @@ public class MainActivity extends AppCompatActivity {
         str += "\nQuantity : " + numberOfCoffees;
         str += "\nTotal :" + NumberFormat.getCurrencyInstance().format(calculatePrice());
         str += "\nThank you!";
-        displayMessage(str);
+        //displayMessage(str);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Ordering Coffee for "+name);
+        intent.putExtra(Intent.EXTRA_TEXT, str);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     private void updateQuantityAndPrice(View v) {
