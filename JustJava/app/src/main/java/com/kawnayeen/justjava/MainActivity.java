@@ -3,6 +3,8 @@ package com.kawnayeen.justjava;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -24,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     Button incrementBtn;
     @BindView(R.id.decrement)
     Button decrementBtn;
+    @BindView(R.id.whipped_cream_topping)
+    CheckBox whippedCream;
+    @BindView(R.id.et_customer_name)
+    EditText customerName;
 
     private int numberOfCoffees;
     private String name = "Kawnayeen";
@@ -52,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void submitOrder() {
+        name = customerName.getText().toString();
         String str = "";
-        str += "Name : "+name;
-        str += "\nQuantity : "+numberOfCoffees;
+        str += "Name : " + name;
+        if (whippedCream.isChecked())
+            str += "\nAdd whipped cream";
+        str += "\nQuantity : " + numberOfCoffees;
         str += "\nTotal :" + NumberFormat.getCurrencyInstance().format(calculatePrice());
         str += "\nThank you!";
         displayMessage(str);
