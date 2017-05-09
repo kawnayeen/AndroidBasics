@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 
@@ -59,15 +60,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void incrementOrder(View v) {
-        numberOfCoffees++;
-        updateQuantityAndPrice(v);
+        if (numberOfCoffees < 100) {
+            numberOfCoffees++;
+            updateQuantityAndPrice(v);
+        } else {
+            showToastMessage("You can't have more than 100 coffee");
+        }
     }
 
     private void decrementOrder(View v) {
-        if (numberOfCoffees > 0) {
+        if (numberOfCoffees > 1) {
             numberOfCoffees--;
             updateQuantityAndPrice(v);
+        } else {
+            showToastMessage("You can't have less than 1 coffee");
         }
+    }
+
+    private void showToastMessage(String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        toast.show();
     }
 
     private void submitOrder() {
