@@ -87,19 +87,18 @@ public class MainActivity extends AppCompatActivity {
     private void submitOrder() {
         String name = customerName.getText().toString();
         String str = "";
-        str += "Name : " + name;
+        str += getString(R.string.name) + " : " + name;
         if (whippedCream.isChecked())
-            str += "\nAdd whipped cream";
+            str += "\nAdd " + getString(R.string.whipped_cream);
         if (chocolate.isChecked())
-            str += "\nAdd chocolate";
-        str += "\nQuantity : " + numberOfCoffees;
-        str += "\nTotal :" + NumberFormat.getCurrencyInstance().format(calculatePrice());
-        str += "\nThank you!";
-        //displayMessage(str);
+            str += "\nAdd " + getString(R.string.chocolate);
+        str += "\n" + getString(R.string.quantity) + " : " + numberOfCoffees;
+        str += "\n" + getString(R.string.total) + " : " + NumberFormat.getCurrencyInstance().format(calculatePrice());
+        str += "\n" + getString(R.string.thank_you);
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Ordering Coffee for "+name);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Ordering Coffee for " + name);
         intent.putExtra(Intent.EXTRA_TEXT, str);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
