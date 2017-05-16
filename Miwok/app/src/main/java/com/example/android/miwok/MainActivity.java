@@ -15,16 +15,35 @@
  */
 package com.example.android.miwok;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.numbers)
+    Button numbersBtn;
+    @BindView(R.id.family)
+    Button familyBtn;
+    @BindView(R.id.colors)
+    Button colorsBtn;
+    @BindView(R.id.phrases)
+    Button phrasesBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+        numbersBtn.setOnClickListener(v -> startActivity(new Intent(this, NumbersActivity.class)));
+        familyBtn.setOnClickListener(v -> startActivity(new Intent(this, FamilyMembersActivity.class)));
+        colorsBtn.setOnClickListener(v -> startActivity(new Intent(this, ColorsActivity.class)));
+        phrasesBtn.setOnClickListener(v -> startActivity(new Intent(this, PhrasesActivity.class)));
     }
 }
