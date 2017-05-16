@@ -15,9 +15,9 @@ import java.util.List;
  */
 class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder> {
 
-    private List<String> values;
+    private List<Word> values;
 
-    NumberAdapter(List<String> values) {
+    NumberAdapter(List<Word> values) {
         this.values = values;
     }
 
@@ -42,15 +42,18 @@ class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder>
 
     class NumberViewHolder extends RecyclerView.ViewHolder {
 
-        TextView listItemNumberView;
+        TextView englishText;
+        TextView miwokText;
 
         NumberViewHolder(View itemView) {
             super(itemView);
-            listItemNumberView = (TextView) itemView.findViewById(R.id.numberText);
+            englishText = (TextView) itemView.findViewById(R.id.englishText);
+            miwokText = (TextView) itemView.findViewById(R.id.miwokText);
         }
 
-        void bind(String number) {
-            listItemNumberView.setText(number);
+        void bind(Word word) {
+            englishText.setText(word.getEnglishTranslation());
+            miwokText.setText(word.getMiwokTranslation());
         }
     }
 }

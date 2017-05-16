@@ -17,8 +17,19 @@ public class NumbersActivity extends AppCompatActivity {
     @BindView(R.id.rvNumber)
     RecyclerView numberRecyclerView;
 
-    List<String> words = new ArrayList<>(
-            Arrays.asList("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen")
+    List<Word> words = new ArrayList<>(
+            Arrays.asList(
+                    new Word("lutti", "one"),
+                    new Word("otiiko", "two"),
+                    new Word("tolookosu", "three"),
+                    new Word("oyyisa", "four"),
+                    new Word("massokka", "five"),
+                    new Word("temmokka", "six"),
+                    new Word("kenekaku", "seven"),
+                    new Word("kawinta", "eight"),
+                    new Word("wo'e", "nine"),
+                    new Word("na'aacha", "ten")
+            )
     );
 
     @Override
