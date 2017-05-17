@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -44,16 +45,19 @@ class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder>
 
         TextView englishText;
         TextView miwokText;
+        ImageView numberImage;
 
         NumberViewHolder(View itemView) {
             super(itemView);
             englishText = (TextView) itemView.findViewById(R.id.englishText);
             miwokText = (TextView) itemView.findViewById(R.id.miwokText);
+            numberImage = (ImageView) itemView.findViewById(R.id.numberImage);
         }
 
         void bind(Word word) {
             englishText.setText(word.getEnglishTranslation());
             miwokText.setText(word.getMiwokTranslation());
+            numberImage.setImageResource(word.getImgResourceId());
         }
     }
 }

@@ -19,16 +19,16 @@ public class NumbersActivity extends AppCompatActivity {
 
     List<Word> words = new ArrayList<>(
             Arrays.asList(
-                    new Word("lutti", "one"),
-                    new Word("otiiko", "two"),
-                    new Word("tolookosu", "three"),
-                    new Word("oyyisa", "four"),
-                    new Word("massokka", "five"),
-                    new Word("temmokka", "six"),
-                    new Word("kenekaku", "seven"),
-                    new Word("kawinta", "eight"),
-                    new Word("wo'e", "nine"),
-                    new Word("na'aacha", "ten")
+                    new Word("lutti", "one", R.drawable.number_one),
+                    new Word("otiiko", "two", R.drawable.number_two),
+                    new Word("tolookosu", "three", R.drawable.number_three),
+                    new Word("oyyisa", "four", R.drawable.number_four),
+                    new Word("massokka", "five", R.drawable.number_five),
+                    new Word("temmokka", "six", R.drawable.number_six),
+                    new Word("kenekaku", "seven", R.drawable.number_seven),
+                    new Word("kawinta", "eight", R.drawable.number_eight),
+                    new Word("wo'e", "nine", R.drawable.number_nine),
+                    new Word("na'aacha", "ten", R.drawable.number_ten)
             )
     );
 

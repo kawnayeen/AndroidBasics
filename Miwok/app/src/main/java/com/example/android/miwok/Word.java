@@ -7,10 +7,12 @@ package com.example.android.miwok;
 public class Word {
     private String miwokTranslation;
     private String englishTranslation;
+    private int imgResourceId;
 
-    public Word(String miwokTranslation, String englishTranslation) {
+    public Word(String miwokTranslation, String englishTranslation, int imgResourceId) {
         this.miwokTranslation = miwokTranslation;
         this.englishTranslation = englishTranslation;
+        this.imgResourceId = imgResourceId;
     }
 
     public String getMiwokTranslation() {
@@ -19,5 +21,9 @@ public class Word {
 
     public String getEnglishTranslation() {
         return englishTranslation;
+    }
+
+    public int getImgResourceId() {
+        return imgResourceId;
     }
 }
