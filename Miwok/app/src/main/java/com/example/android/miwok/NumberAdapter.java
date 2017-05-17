@@ -57,7 +57,10 @@ class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder>
         void bind(Word word) {
             englishText.setText(word.getEnglishTranslation());
             miwokText.setText(word.getMiwokTranslation());
-            numberImage.setImageResource(word.getImgResourceId());
+            if (word.isImageAvailable())
+                numberImage.setImageResource(word.getImgResourceId());
+            else
+                numberImage.setVisibility(View.GONE);
         }
     }
 }
