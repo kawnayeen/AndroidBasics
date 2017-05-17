@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ public abstract class WordActivity extends AppCompatActivity {
     RecyclerView numberRecyclerView;
 
     List<Word> words;
+    int colorId;
 
     abstract void populateWords();
 
@@ -28,9 +30,11 @@ public abstract class WordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_numbers);
         ButterKnife.bind(this);
         populateWords();
-        NumberAdapter numberAdapter = new NumberAdapter(words);
+        NumberAdapter numberAdapter = new NumberAdapter(words, colorId);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         numberRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration decoration = new DividerItemDecoration(numberRecyclerView.getContext(), layoutManager.getOrientation());
+        numberRecyclerView.addItemDecoration(decoration);
         numberRecyclerView.setHasFixedSize(true);
         numberRecyclerView.setAdapter(numberAdapter);
     }

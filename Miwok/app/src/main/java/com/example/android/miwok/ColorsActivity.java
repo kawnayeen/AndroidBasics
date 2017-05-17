@@ -6,6 +6,7 @@ public class ColorsActivity extends WordActivity {
 
     @Override
     void populateWords() {
+        colorId = R.color.category_colors;
         words = new ArrayList<Word>();
         words.add(new Word("red", "weṭeṭṭi", R.drawable.color_red));
         words.add(new Word("mustard yellow", "chiwiiṭә", R.drawable.color_mustard_yellow));

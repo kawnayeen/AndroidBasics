@@ -1,6 +1,7 @@
 package com.example.android.miwok;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,11 @@ import java.util.List;
 class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder> {
 
     private List<Word> values;
+    private int colorResourceId;
 
-    NumberAdapter(List<Word> values) {
+    NumberAdapter(List<Word> values, int colorResourceId) {
         this.values = values;
+        this.colorResourceId = colorResourceId;
     }
 
     @Override
@@ -52,6 +55,8 @@ class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder>
             englishText = (TextView) itemView.findViewById(R.id.englishText);
             miwokText = (TextView) itemView.findViewById(R.id.miwokText);
             numberImage = (ImageView) itemView.findViewById(R.id.numberImage);
+            itemView.findViewById(R.id.textContainer)
+                    .setBackgroundColor(ContextCompat.getColor(itemView.getContext(), colorResourceId));
         }
 
         void bind(Word word) {

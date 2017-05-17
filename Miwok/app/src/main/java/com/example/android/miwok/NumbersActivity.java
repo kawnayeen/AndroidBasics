@@ -6,6 +6,7 @@ public class NumbersActivity extends WordActivity {
 
     @Override
     void populateWords() {
+        colorId = R.color.category_numbers;
         words = new ArrayList<>();
         words.add(new Word("one", "lutti", R.drawable.number_one));
         words.add(new Word("two", "otiiko", R.drawable.number_two));

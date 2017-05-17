@@ -6,6 +6,7 @@ public class PhrasesActivity extends WordActivity {
 
     @Override
     void populateWords() {
+        colorId = R.color.category_phrases;
         words = new ArrayList<>();
         words.add(new Word("Where are you going?", "minto wuksus"));
         words.add(new Word("What is your name?", "tinnә oyaase'nә"));

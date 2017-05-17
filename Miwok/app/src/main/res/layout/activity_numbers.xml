@@ -4,7 +4,6 @@
     android:id="@+id/rvNumber"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context="com.example.android.miwok.NumbersActivity">
 
 </android.support.v7.widget.RecyclerView>

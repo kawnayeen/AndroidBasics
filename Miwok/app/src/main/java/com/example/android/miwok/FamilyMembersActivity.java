@@ -6,6 +6,7 @@ public class FamilyMembersActivity extends WordActivity {
 
     @Override
     void populateWords() {
+        colorId = R.color.category_family;
         words = new ArrayList<>();
         words.add(new Word("father", "әpә", R.drawable.family_father));
         words.add(new Word("mother", "әṭa", R.drawable.family_mother));
