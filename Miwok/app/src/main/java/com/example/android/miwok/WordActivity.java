@@ -27,15 +27,15 @@ public abstract class WordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_numbers);
+        setContentView(R.layout.activity_words);
         ButterKnife.bind(this);
         populateWords();
-        NumberAdapter numberAdapter = new NumberAdapter(words, colorId);
+        WordAdapter wordAdapter = new WordAdapter(words, colorId);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         numberRecyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(numberRecyclerView.getContext(), layoutManager.getOrientation());
         numberRecyclerView.addItemDecoration(decoration);
         numberRecyclerView.setHasFixedSize(true);
-        numberRecyclerView.setAdapter(numberAdapter);
+        numberRecyclerView.setAdapter(wordAdapter);
     }
 }

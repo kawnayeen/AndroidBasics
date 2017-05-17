@@ -15,27 +15,27 @@ import java.util.List;
  * Developed by : kawnayeen
  * Creation Date : 5/16/17
  */
-class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder> {
+class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
 
     private List<Word> values;
     private int colorResourceId;
 
-    NumberAdapter(List<Word> values, int colorResourceId) {
+    WordAdapter(List<Word> values, int colorResourceId) {
         this.values = values;
         this.colorResourceId = colorResourceId;
     }
 
     @Override
-    public NumberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.number_list_item;
+        int layoutIdForListItem = R.layout.word_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutIdForListItem, parent, false);
-        return new NumberViewHolder(view);
+        return new WordViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NumberViewHolder holder, int position) {
+    public void onBindViewHolder(WordViewHolder holder, int position) {
         holder.bind(values.get(position));
     }
 
@@ -44,17 +44,17 @@ class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder>
         return values.size();
     }
 
-    class NumberViewHolder extends RecyclerView.ViewHolder {
+    class WordViewHolder extends RecyclerView.ViewHolder {
 
         TextView englishText;
         TextView miwokText;
-        ImageView numberImage;
+        ImageView image;
 
-        NumberViewHolder(View itemView) {
+        WordViewHolder(View itemView) {
             super(itemView);
             englishText = (TextView) itemView.findViewById(R.id.englishText);
             miwokText = (TextView) itemView.findViewById(R.id.miwokText);
-            numberImage = (ImageView) itemView.findViewById(R.id.numberImage);
+            image = (ImageView) itemView.findViewById(R.id.numberImage);
             itemView.findViewById(R.id.textContainer)
                     .setBackgroundColor(ContextCompat.getColor(itemView.getContext(), colorResourceId));
         }
@@ -63,9 +63,9 @@ class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.NumberViewHolder>
             englishText.setText(word.getEnglishTranslation());
             miwokText.setText(word.getMiwokTranslation());
             if (word.isImageAvailable())
-                numberImage.setImageResource(word.getImgResourceId());
+                image.setImageResource(word.getImgResourceId());
             else
-                numberImage.setVisibility(View.GONE);
+                image.setVisibility(View.GONE);
         }
     }
 }
