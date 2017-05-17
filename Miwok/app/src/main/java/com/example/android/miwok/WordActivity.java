@@ -30,7 +30,7 @@ public abstract class WordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_words);
         ButterKnife.bind(this);
         populateWords();
-        WordAdapter wordAdapter = new WordAdapter(words, colorId);
+        WordAdapter wordAdapter = new WordAdapter(words, colorId, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         numberRecyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(numberRecyclerView.getContext(), layoutManager.getOrientation());
