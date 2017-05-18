@@ -30,6 +30,7 @@ public abstract class WordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         populateWords();
         wordAdapter = new WordAdapter(words, colorId, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
