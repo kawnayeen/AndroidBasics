@@ -51,12 +51,17 @@ class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> imple
 
     @Override
     public void itemClicked(int position) {
+        cleanUpPlayer();
+        player = MediaPlayer.create(context, values.get(position).getAudioResourceId());
+        player.start();
+        player.setOnCompletionListener(mp -> cleanUpPlayer());
+    }
+
+    public void cleanUpPlayer() {
         if (player != null) {
             player.release();
             player = null;
         }
-        player = MediaPlayer.create(context, values.get(position).getAudioResourceId());
-        player.start();
     }
 
     class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -21,6 +21,7 @@ public abstract class WordActivity extends AppCompatActivity {
 
     List<Word> words;
     int colorId;
+    private WordAdapter wordAdapter;
 
     abstract void populateWords();
 
@@ -30,12 +31,18 @@ public abstract class WordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_words);
         ButterKnife.bind(this);
         populateWords();
-        WordAdapter wordAdapter = new WordAdapter(words, colorId, this);
+        wordAdapter = new WordAdapter(words, colorId, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         numberRecyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(numberRecyclerView.getContext(), layoutManager.getOrientation());
         numberRecyclerView.addItemDecoration(decoration);
         numberRecyclerView.setHasFixedSize(true);
         numberRecyclerView.setAdapter(wordAdapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        wordAdapter.cleanUpPlayer();
     }
 }
