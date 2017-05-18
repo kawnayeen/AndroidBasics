@@ -1,6 +1,8 @@
 package com.example.android.miwok;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static android.media.AudioManager.AUDIOFOCUS_GAIN;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
+
 /**
  * Developed by : kawnayeen
  * Creation Date : 5/16/17
@@ -22,12 +29,16 @@ class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> imple
     private int colorResourceId;
     private Context context;
     private MediaPlayer player;
+    private AudioManager audioManager;
+    private OnAudioFocusChangeListener onAudioFocusChangeListener =
+            this::audioFocusChanged;
 
     WordAdapter(List<Word> values, int colorResourceId, Context context) {
         this.values = values;
         this.colorResourceId = colorResourceId;
         this.context = context;
         this.player = null;
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     }
 
     @Override
@@ -52,15 +63,35 @@ class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> imple
     @Override
     public void itemClicked(int position) {
         cleanUpPlayer();
-        player = MediaPlayer.create(context, values.get(position).getAudioResourceId());
-        player.start();
-        player.setOnCompletionListener(mp -> cleanUpPlayer());
+        int result = audioManager.requestAudioFocus(
+                onAudioFocusChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            player = MediaPlayer.create(context, values.get(position).getAudioResourceId());
+            player.start();
+            player.setOnCompletionListener(mp -> cleanUpPlayer());
+        }
     }
 
     public void cleanUpPlayer() {
         if (player != null) {
             player.release();
             player = null;
+            audioManager.abandonAudioFocus(onAudioFocusChangeListener);
+        }
+    }
+
+    private void audioFocusChanged(int focusChange) {
+        if (player == null)
+            return;
+        if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK || focusChange == AUDIOFOCUS_LOSS_TRANSIENT) {
+            player.pause();
+            player.seekTo(0);
+        } else if (focusChange == AUDIOFOCUS_LOSS) {
+            cleanUpPlayer();
+        } else if (focusChange == AUDIOFOCUS_GAIN) {
+            player.start();
         }
     }
 
