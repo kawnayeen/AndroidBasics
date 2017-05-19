@@ -1,4 +1,4 @@
-package com.example.android.miwok;
+package com.example.android.miwok.fragments;
 
 
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.miwok.R;
+import com.example.android.miwok.WordAdapter;
 import com.example.android.miwok.model.Word;
 
 import java.util.List;

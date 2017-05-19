@@ -5,6 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.android.miwok.fragments.ColorFragment;
+import com.example.android.miwok.fragments.FamilyFragment;
+import com.example.android.miwok.fragments.NumberFragment;
+import com.example.android.miwok.fragments.PhraseFragment;
+
 /**
  * Developed by : kawnayeen
  * Creation Date : 5/19/17

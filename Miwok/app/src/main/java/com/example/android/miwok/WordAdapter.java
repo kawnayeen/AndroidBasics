@@ -25,7 +25,7 @@ import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
  * Developed by : kawnayeen
  * Creation Date : 5/16/17
  */
-class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> implements ItemClickListener {
+public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> implements ItemClickListener {
 
     private List<Word> values;
     private int colorResourceId;
@@ -35,7 +35,7 @@ class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> imple
     private OnAudioFocusChangeListener onAudioFocusChangeListener =
             this::audioFocusChanged;
 
-    WordAdapter(List<Word> values, int colorResourceId, Context context) {
+    public WordAdapter(List<Word> values, int colorResourceId, Context context) {
         this.values = values;
         this.colorResourceId = colorResourceId;
         this.context = context;

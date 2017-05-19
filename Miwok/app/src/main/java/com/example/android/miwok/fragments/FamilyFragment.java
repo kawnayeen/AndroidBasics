@@ -1,7 +1,8 @@
-package com.example.android.miwok;
+package com.example.android.miwok.fragments;
 
 import android.support.v4.app.Fragment;
 
+import com.example.android.miwok.R;
 import com.example.android.miwok.model.Word;
 
 import java.util.ArrayList;
