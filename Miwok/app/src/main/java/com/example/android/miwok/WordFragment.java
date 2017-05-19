@@ -1,10 +1,16 @@
 package com.example.android.miwok;
 
+
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.android.miwok.model.Word;
 
 import java.util.List;
 
@@ -12,10 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Developed by : kawnayeen
- * Creation Date : 5/17/17
+ * A simple {@link Fragment} subclass.
  */
-public abstract class WordActivity extends AppCompatActivity {
+public abstract class WordFragment extends Fragment {
     @BindView(R.id.rvNumber)
     RecyclerView numberRecyclerView;
 
@@ -26,23 +31,23 @@ public abstract class WordActivity extends AppCompatActivity {
     abstract void populateWords();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_words);
-        ButterKnife.bind(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_words, container, false);
+        ButterKnife.bind(this, rootView);
         populateWords();
-        wordAdapter = new WordAdapter(words, colorId, this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        wordAdapter = new WordAdapter(words, colorId, getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         numberRecyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(numberRecyclerView.getContext(), layoutManager.getOrientation());
         numberRecyclerView.addItemDecoration(decoration);
         numberRecyclerView.setHasFixedSize(true);
         numberRecyclerView.setAdapter(wordAdapter);
+        return rootView;
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         wordAdapter.cleanUpPlayer();
     }

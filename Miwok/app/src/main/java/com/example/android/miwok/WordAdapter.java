@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.miwok.model.Word;
+
 import java.util.List;
 
 import static android.media.AudioManager.AUDIOFOCUS_GAIN;
