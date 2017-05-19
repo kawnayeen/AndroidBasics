@@ -15,35 +15,23 @@
  */
 package com.example.android.miwok;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.numbers)
-    Button numbersBtn;
-    @BindView(R.id.family)
-    Button familyBtn;
-    @BindView(R.id.colors)
-    Button colorsBtn;
-    @BindView(R.id.phrases)
-    Button phrasesBtn;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
-
-        numbersBtn.setOnClickListener(v -> startActivity(new Intent(this, NumbersActivity.class)));
-        familyBtn.setOnClickListener(v -> startActivity(new Intent(this, FamilyMembersActivity.class)));
-        colorsBtn.setOnClickListener(v -> startActivity(new Intent(this, ColorsActivity.class)));
-        phrasesBtn.setOnClickListener(v -> startActivity(new Intent(this, PhrasesActivity.class)));
+        viewPager.setAdapter(new WordFragmentPageAdapter(getSupportFragmentManager()));
     }
 }
