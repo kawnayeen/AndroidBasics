@@ -1,5 +1,6 @@
 package com.example.android.miwok;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,8 +12,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class WordFragmentPageAdapter extends FragmentPagerAdapter {
 
-    public WordFragmentPageAdapter(FragmentManager fm) {
+    Context context;
+
+    public WordFragmentPageAdapter(Context context, FragmentManager fm) {
         super(fm);
+        this.context = context;
     }
 
     @Override
@@ -34,5 +38,19 @@ public class WordFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 4;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return context.getString(R.string.category_numbers);
+            case 1:
+                return context.getString(R.string.category_family);
+            case 2:
+                return context.getString(R.string.category_colors);
+            default:
+                return context.getString(R.string.category_phrases);
+        }
     }
 }
