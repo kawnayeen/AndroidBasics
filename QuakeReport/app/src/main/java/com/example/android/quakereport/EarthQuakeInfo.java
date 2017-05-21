@@ -1,5 +1,6 @@
 package com.example.android.quakereport;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ import java.util.Date;
  */
 public class EarthQuakeInfo {
     private double magnitude;
+    private String formattedMagnitude;
     private String city;
     private String distanceFromCity;
     private Date date;
@@ -15,6 +17,7 @@ public class EarthQuakeInfo {
     private String timeToDisplay;
     private static SimpleDateFormat dateFormatter = new SimpleDateFormat("LLL dd, yyyy");
     private static SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+    private static DecimalFormat magnitudeFormatter = new DecimalFormat("0.0");
     private static String LOCATION_SPLITTER = " of ";
 
     public EarthQuakeInfo(double magnitude, String cityName, long date) {
@@ -32,6 +35,7 @@ public class EarthQuakeInfo {
         this.date = new Date(date);
         dateToDisplay = dateFormatter.format(this.date);
         timeToDisplay = timeFormatter.format(this.date);
+        formattedMagnitude = magnitudeFormatter.format(magnitude);
     }
 
     public double getMagnitude() {
@@ -56,5 +60,9 @@ public class EarthQuakeInfo {
 
     public String getDistanceFromCity() {
         return distanceFromCity;
+    }
+
+    public String getFormattedMagnitude() {
+        return formattedMagnitude;
     }
 }
