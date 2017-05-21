@@ -46,8 +46,12 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
         TextView magnitude;
         @BindView(R.id.cityName)
         TextView cityName;
+        @BindView(R.id.distanceFromCity)
+        TextView distanceFromCity;
         @BindView(R.id.date)
         TextView date;
+        @BindView(R.id.time)
+        TextView time;
 
         public EarthQuakeViewHolder(View itemView) {
             super(itemView);
@@ -55,9 +59,11 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
         }
 
         void bind(EarthQuakeInfo earthQuakeInfo) {
-            this.cityName.setText(earthQuakeInfo.getCityName());
+            this.cityName.setText(earthQuakeInfo.getCity());
+            this.distanceFromCity.setText(earthQuakeInfo.getDistanceFromCity());
             this.magnitude.setText(earthQuakeInfo.getMagnitude() + "");
-            this.date.setText(earthQuakeInfo.getDate());
+            this.date.setText(earthQuakeInfo.getDateToDisplay());
+            this.time.setText(earthQuakeInfo.getTimeToDisplay());
         }
     }
 }
