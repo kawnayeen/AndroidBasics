@@ -9,13 +9,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by kawnayeen on 5/20/17.
  */
 public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.EarthQuakeViewHolder> {
-    private List<String> values;
+    private List<EarthQuakeInfo> values;
 
-    public EarthQuakeAdapter(List<String> values) {
+    public EarthQuakeAdapter(List<EarthQuakeInfo> values) {
         this.values = values;
     }
 
@@ -39,15 +42,22 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
     }
 
     class EarthQuakeViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.magnitude)
+        TextView magnitude;
+        @BindView(R.id.cityName)
         TextView cityName;
+        @BindView(R.id.date)
+        TextView date;
 
         public EarthQuakeViewHolder(View itemView) {
             super(itemView);
-            cityName = (TextView) itemView.findViewById(R.id.cityName);
+            ButterKnife.bind(this, itemView);
         }
 
-        void bind(String cityName) {
-            this.cityName.setText(cityName);
+        void bind(EarthQuakeInfo earthQuakeInfo) {
+            this.cityName.setText(earthQuakeInfo.getCityName());
+            this.magnitude.setText(earthQuakeInfo.getMagnitude() + "");
+            this.date.setText(earthQuakeInfo.getDate());
         }
     }
 }

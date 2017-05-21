@@ -23,14 +23,14 @@ public class EarthquakeActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ArrayList<String> earthquakes = new ArrayList<>();
-        earthquakes.add("San Francisco");
-        earthquakes.add("London");
-        earthquakes.add("Tokyo");
-        earthquakes.add("Mexico City");
-        earthquakes.add("Moscow");
-        earthquakes.add("Rio de Janeiro");
-        earthquakes.add("Paris");
+        ArrayList<EarthQuakeInfo> earthquakes = new ArrayList<>();
+        earthquakes.add(new EarthQuakeInfo(5.6, "San Francisco", "21th May, 2017"));
+        earthquakes.add(new EarthQuakeInfo(7.2, "California", "14th May, 2017"));
+        earthquakes.add(new EarthQuakeInfo(8.1, "New Jersey", "24th May, 2017"));
+        earthquakes.add(new EarthQuakeInfo(3.6, "Dhaka", "21th May, 2017"));
+        earthquakes.add(new EarthQuakeInfo(4.6, "Khulna", "27th May, 2017"));
+        earthquakes.add(new EarthQuakeInfo(3.3, "Chittagong", "20th May, 2017"));
+
 
         EarthQuakeAdapter earthQuakeAdapter = new EarthQuakeAdapter(earthquakes);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
