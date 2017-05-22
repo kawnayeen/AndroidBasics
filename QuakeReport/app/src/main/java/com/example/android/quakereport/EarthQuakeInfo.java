@@ -15,12 +15,13 @@ public class EarthQuakeInfo {
     private Date date;
     private String dateToDisplay;
     private String timeToDisplay;
+    private String detailsUrl;
     private static SimpleDateFormat dateFormatter = new SimpleDateFormat("LLL dd, yyyy");
     private static SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
     private static DecimalFormat magnitudeFormatter = new DecimalFormat("0.0");
     private static String LOCATION_SPLITTER = " of ";
 
-    public EarthQuakeInfo(double magnitude, String cityName, long date) {
+    public EarthQuakeInfo(double magnitude, String cityName, long date, String detailsUrl) {
         this.magnitude = magnitude;
 
         if (cityName.contains(LOCATION_SPLITTER)) {
@@ -36,6 +37,7 @@ public class EarthQuakeInfo {
         dateToDisplay = dateFormatter.format(this.date);
         timeToDisplay = timeFormatter.format(this.date);
         formattedMagnitude = magnitudeFormatter.format(magnitude);
+        this.detailsUrl = detailsUrl;
     }
 
     public double getMagnitude() {
@@ -44,10 +46,6 @@ public class EarthQuakeInfo {
 
     public String getCity() {
         return city;
-    }
-
-    public Date getDate() {
-        return date;
     }
 
     public String getDateToDisplay() {
@@ -64,5 +62,9 @@ public class EarthQuakeInfo {
 
     public String getFormattedMagnitude() {
         return formattedMagnitude;
+    }
+
+    public String getDetailsUrl() {
+        return detailsUrl;
     }
 }

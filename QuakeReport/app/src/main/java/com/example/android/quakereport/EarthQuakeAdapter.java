@@ -48,7 +48,7 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
 
     @Override
     public void itemClicked(int position) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://kawnayeen.github.io"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(values.get(position).getDetailsUrl()));
         context.startActivity(browserIntent);
     }
 
