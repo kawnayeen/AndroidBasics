@@ -1,7 +1,9 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +19,9 @@ import butterknife.ButterKnife;
 /**
  * Created by kawnayeen on 5/20/17.
  */
-public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.EarthQuakeViewHolder> {
+public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.EarthQuakeViewHolder> implements ItemClickListener {
     private List<EarthQuakeInfo> values;
+    private Context context;
 
     public EarthQuakeAdapter(List<EarthQuakeInfo> values) {
         this.values = values;
@@ -26,11 +29,11 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
 
     @Override
     public EarthQuakeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         int layoutIdForListItem = R.layout.earthquake_event;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutIdForListItem, parent, false);
-        return new EarthQuakeViewHolder(view);
+        return new EarthQuakeViewHolder(view, this);
     }
 
     @Override
@@ -43,7 +46,13 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
         return values.size();
     }
 
-    class EarthQuakeViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void itemClicked(int position) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://kawnayeen.github.io"));
+        context.startActivity(browserIntent);
+    }
+
+    class EarthQuakeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.magnitude)
         TextView magnitude;
         @BindView(R.id.cityName)
@@ -55,9 +64,13 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
         @BindView(R.id.time)
         TextView time;
 
-        public EarthQuakeViewHolder(View itemView) {
+        ItemClickListener itemClickListener;
+
+        public EarthQuakeViewHolder(View itemView, ItemClickListener itemClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+            this.itemClickListener = itemClickListener;
         }
 
         void bind(EarthQuakeInfo earthQuakeInfo) {
@@ -68,6 +81,11 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
             this.time.setText(earthQuakeInfo.getTimeToDisplay());
             GradientDrawable magnitudeDrawable = (GradientDrawable) magnitude.getBackground();
             magnitudeDrawable.setColor(getMagnitudeColor(earthQuakeInfo.getMagnitude()));
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.itemClicked(getAdapterPosition());
         }
 
         private int getMagnitudeColor(double mag) {
@@ -109,4 +127,8 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
             return ContextCompat.getColor(magnitude.getContext(), magnitudeColorResourceId);
         }
     }
+}
+
+interface ItemClickListener {
+    void itemClicked(int position);
 }
