@@ -46,6 +46,10 @@ public class EarthQuakeAdapter extends RecyclerView.Adapter<EarthQuakeAdapter.Ea
         return values.size();
     }
 
+    public void setValues(List<EarthQuakeInfo> quakeInfos) {
+        this.values = quakeInfos;
+    }
+
     @Override
     public void itemClicked(int position) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(values.get(position).getDetailsUrl()));
