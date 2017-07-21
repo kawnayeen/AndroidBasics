@@ -42,7 +42,7 @@ public final class QueryUtils {
     public static ArrayList<EarthQuakeInfo> extractEarthquakes(String jsonResponse) {
         ArrayList<EarthQuakeInfo> earthquakes = new ArrayList<>();
         try {
-            JSONObject baseJsonResponse = new JSONObject(SAMPLE_JSON_RESPONSE);
+            JSONObject baseJsonResponse = new JSONObject(jsonResponse);
             JSONArray earthQuakeArray = baseJsonResponse.getJSONArray("features");
             for (int i = 0; i < earthQuakeArray.length(); i++) {
                 JSONObject currentEarthQuake = earthQuakeArray.getJSONObject(i);

@@ -6,12 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
@@ -39,6 +43,24 @@ public class EarthquakeActivity extends AppCompatActivity {
         earthQuakeViews.setAdapter(earthQuakeAdapter);
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
+
+        USGSService usgsService = RestClient.getUsgsService();
+        Call<QuakeInfos> quakeInfosCall = usgsService.getQuakeInfos();
+        quakeInfosCall.enqueue(new Callback<QuakeInfos>() {
+            @Override
+            public void onResponse(Call<QuakeInfos> call, Response<QuakeInfos> response) {
+                if (response.isSuccessful()) {
+                    Log.i("kamarul", "success " + response.body().quakeInfos.length);
+                } else {
+                    Log.i("kamarul", "fail at on response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QuakeInfos> call, Throwable t) {
+                Log.i("kamarul", t.toString());
+            }
+        });
     }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<EarthQuakeInfo>> {
