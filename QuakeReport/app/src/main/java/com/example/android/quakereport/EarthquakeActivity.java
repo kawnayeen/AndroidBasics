@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,10 +40,9 @@ public class EarthquakeActivity extends AppCompatActivity {
         earthQuakeViews.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(earthQuakeViews.getContext(), layoutManager.getOrientation());
         earthQuakeViews.addItemDecoration(decoration);
-        //earthQuakeViews.setHasFixedSize(true);
         earthQuakeViews.setAdapter(earthQuakeAdapter);
-        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-        task.execute(USGS_REQUEST_URL);
+//        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+//        task.execute(USGS_REQUEST_URL);
 
         USGSService usgsService = RestClient.getUsgsService();
         Call<QuakeInfos> quakeInfosCall = usgsService.getQuakeInfos();
@@ -50,7 +50,16 @@ public class EarthquakeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QuakeInfos> call, Response<QuakeInfos> response) {
                 if (response.isSuccessful()) {
-                    Log.i("kamarul", "success " + response.body().quakeInfos.length);
+                    //Log.i("kamarul", "success " + response.body().quakeInfos.length);
+                    List<QuakeInfo> quakeInfos = Arrays.asList(response.body().quakeInfos);
+                    List<EarthQuakeInfo> infos = new ArrayList<>();
+                    for (QuakeInfo quakeInfo : quakeInfos) {
+                        infos.add(new EarthQuakeInfo(quakeInfo.properties.getMagnitude(),
+                                quakeInfo.properties.getLocation(), quakeInfo.properties.getTime()
+                                , quakeInfo.properties.getDetailsUrl()));
+                    }
+                    earthQuakeAdapter.setValues(infos);
+                    earthQuakeAdapter.notifyDataSetChanged();
                 } else {
                     Log.i("kamarul", "fail at on response");
                 }

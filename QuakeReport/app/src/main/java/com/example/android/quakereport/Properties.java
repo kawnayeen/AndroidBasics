@@ -15,4 +15,20 @@ public class Properties {
     private long time;
     @SerializedName("url")
     private String detailsUrl;
+
+    public double getMagnitude() {
+        return magnitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public String getDetailsUrl() {
+        return detailsUrl;
+    }
 }
