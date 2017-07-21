@@ -1,4 +1,4 @@
-package com.example.android.quakereport;
+package com.example.android.quakereport.networking;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

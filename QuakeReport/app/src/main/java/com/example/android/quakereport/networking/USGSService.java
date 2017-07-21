@@ -1,4 +1,6 @@
-package com.example.android.quakereport;
+package com.example.android.quakereport.networking;
+
+import com.example.android.quakereport.model.QuakeInfos;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

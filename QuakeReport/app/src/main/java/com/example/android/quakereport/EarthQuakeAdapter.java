@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.quakereport.model.EarthQuakeInfo;
+
 import java.util.List;
 
 import butterknife.BindView;

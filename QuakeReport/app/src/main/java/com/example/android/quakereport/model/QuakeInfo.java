@@ -1,5 +1,6 @@
-package com.example.android.quakereport;
+package com.example.android.quakereport.model;
 
+import com.example.android.quakereport.model.Properties;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,5 +9,5 @@ import com.google.gson.annotations.SerializedName;
  */
 public class QuakeInfo {
     @SerializedName("properties")
-    Properties properties;
+    public Properties properties;
 }
