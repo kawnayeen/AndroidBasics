@@ -7,7 +7,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvEarthQuake"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/emptyView"
@@ -16,4 +17,16 @@
         android:gravity="center"
         android:text="@string/no_data_available"
         android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/pbHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/indeterminateBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 </LinearLayout>

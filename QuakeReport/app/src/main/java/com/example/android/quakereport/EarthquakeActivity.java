@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.android.quakereport.model.EarthQuakeInfo;
@@ -31,6 +32,8 @@ public class EarthquakeActivity extends AppCompatActivity {
     RecyclerView earthQuakeViews;
     @BindView(R.id.emptyView)
     TextView emptyView;
+    @BindView(R.id.pbHolder)
+    FrameLayout pbHolder;
     EarthQuakeAdapter earthQuakeAdapter;
 
     @Override
@@ -46,8 +49,6 @@ public class EarthquakeActivity extends AppCompatActivity {
         DividerItemDecoration decoration = new DividerItemDecoration(earthQuakeViews.getContext(), layoutManager.getOrientation());
         earthQuakeViews.addItemDecoration(decoration);
         earthQuakeViews.setAdapter(earthQuakeAdapter);
-        earthQuakeViews.setVisibility(View.GONE);
-        emptyView.setVisibility(View.VISIBLE);
 
         USGSService usgsService = RestClient.getUsgsService();
         Call<QuakeInfos> quakeInfosCall = usgsService.getQuakeInfos();
@@ -62,11 +63,13 @@ public class EarthquakeActivity extends AppCompatActivity {
                                 quakeInfo.properties.getLocation(), quakeInfo.properties.getTime()
                                 , quakeInfo.properties.getDetailsUrl()));
                     }
+                    pbHolder.setVisibility(View.GONE);
                     if (!infos.isEmpty()) {
                         earthQuakeViews.setVisibility(View.VISIBLE);
-                        emptyView.setVisibility(View.GONE);
                         earthQuakeAdapter.setValues(infos);
                         earthQuakeAdapter.notifyDataSetChanged();
+                    } else {
+                        emptyView.setVisibility(View.VISIBLE);
                     }
                 } else {
                     Log.i("kamarul", "fail at on response");
