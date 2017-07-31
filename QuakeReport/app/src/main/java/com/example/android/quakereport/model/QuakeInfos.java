@@ -1,6 +1,5 @@
 package com.example.android.quakereport.model;
 
-import com.example.android.quakereport.model.QuakeInfo;
 import com.google.gson.annotations.SerializedName;
 
 /**
