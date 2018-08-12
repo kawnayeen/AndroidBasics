@@ -18,8 +18,6 @@ import java.text.NumberFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.kawnayeen.justjava.R.id.increment;
-
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.quantity_text_view)
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView priceTv;
     @BindView(R.id.order_button)
     Button orderBtn;
-    @BindView(increment)
+    @BindView(R.id.increment)
     Button incrementBtn;
     @BindView(R.id.decrement)
     Button decrementBtn;
