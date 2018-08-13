@@ -22,12 +22,14 @@ public class OrderViewModel extends AndroidViewModel {
     private static final String MIN_ORDER_LIMIT_ERROR = "You can't have less than 1 coffee";
     private MutableLiveData<String> errorListener;
     private MutableLiveData<String> priceListener;
+    private MutableLiveData<Integer> quantityListener;
 
     public OrderViewModel(@NonNull Application application) {
         super(application);
         numberOfCoffees = 2;
         errorListener = new MutableLiveData<>();
         priceListener = new MutableLiveData<>();
+        quantityListener = new MutableLiveData<>();
     }
 
     private int getPricePerCup() {
@@ -39,6 +41,7 @@ public class OrderViewModel extends AndroidViewModel {
     public void incrementOrder() {
         if (numberOfCoffees < 100) {
             numberOfCoffees++;
+            quantityListener.setValue(numberOfCoffees);
             updatePrice();
         } else
             errorListener.setValue(MAX_ORDER_LIMIT_ERROR);
@@ -47,6 +50,7 @@ public class OrderViewModel extends AndroidViewModel {
     public void decrementOrder() {
         if (numberOfCoffees > 1) {
             numberOfCoffees--;
+            quantityListener.setValue(numberOfCoffees);
             updatePrice();
         } else
             errorListener.setValue(MIN_ORDER_LIMIT_ERROR);
@@ -60,8 +64,8 @@ public class OrderViewModel extends AndroidViewModel {
         return priceListener;
     }
 
-    public int getNumberOfCoffees() {
-        return numberOfCoffees;
+    public MutableLiveData<Integer> quantityStream() {
+        return quantityListener;
     }
 
     public void setCreamChecked(boolean creamChecked) {
@@ -78,7 +82,20 @@ public class OrderViewModel extends AndroidViewModel {
         priceListener.setValue(NumberFormat.getCurrencyInstance().format(calculatePrice()));
     }
 
-    public int calculatePrice() {
+    private int calculatePrice() {
         return numberOfCoffees * getPricePerCup();
+    }
+
+    public Email getEmail(String name) {
+        String str = "";
+        str += getApplication().getString(R.string.name) + " : " + name;
+        if (creamChecked)
+            str += "\nAdd " + getApplication().getString(R.string.whipped_cream);
+        if (chocolateChecked)
+            str += "\nAdd " + getApplication().getString(R.string.chocolate);
+        str += "\n" + getApplication().getString(R.string.quantity) + " : " + numberOfCoffees;
+        str += "\n" + getApplication().getString(R.string.total) + " : " + NumberFormat.getCurrencyInstance().format(calculatePrice());
+        str += "\n" + getApplication().getString(R.string.thank_you);
+        return new Email("Ordering Coffee for " + name, str);
     }
 }

@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.et_customer_name)
     EditText customerName;
 
-    private int numberOfCoffees;
     private OrderViewModel orderViewModel;
 
     @Override
@@ -46,35 +45,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        numberOfCoffees = 2;
         orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
         orderBtn.setOnClickListener(v -> submitOrder());
-        incrementBtn.setOnClickListener(this::incrementOrder);
-        decrementBtn.setOnClickListener(this::decrementOrder);
-        whippedCream.setOnClickListener(this::updateQuantityAndPrice);
-        chocolate.setOnClickListener(this::updateQuantityAndPrice);
+        incrementBtn.setOnClickListener(v -> orderViewModel.incrementOrder());
+        decrementBtn.setOnClickListener(v -> orderViewModel.decrementOrder());
+        whippedCream.setOnClickListener(v -> orderViewModel.setCreamChecked(whippedCream.isChecked()));
+        chocolate.setOnClickListener(v -> orderViewModel.setChocolateChecked(chocolate.isChecked()));
         customerName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus)
                 hideKeyboard(v);
         });
         orderViewModel.errorStream().observe(this, this::showToastMessage);
         orderViewModel.priceStream().observe(this, this::displayPrice);
-    }
-
-    private void incrementOrder(View v) {
-        orderViewModel.incrementOrder();
-        if (numberOfCoffees < 100) {
-            numberOfCoffees++;
-            updateQuantityAndPrice(v);
-        }
-    }
-
-    private void decrementOrder(View v) {
-        orderViewModel.decrementOrder();
-        if (numberOfCoffees > 1) {
-            numberOfCoffees--;
-            updateQuantityAndPrice(v);
-        }
+        orderViewModel.quantityStream().observe(this, this::setQuantityText);
     }
 
     private void showToastMessage(String message) {
@@ -84,35 +67,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void submitOrder() {
         String name = customerName.getText().toString();
-        String str = "";
-        str += getString(R.string.name) + " : " + name;
-        if (whippedCream.isChecked())
-            str += "\nAdd " + getString(R.string.whipped_cream);
-        if (chocolate.isChecked())
-            str += "\nAdd " + getString(R.string.chocolate);
-        str += "\n" + getString(R.string.quantity) + " : " + numberOfCoffees;
-        str += "\n" + getString(R.string.total) + " : " + NumberFormat.getCurrencyInstance().format(calculatePrice());
-        str += "\n" + getString(R.string.thank_you);
-
+        Email email = orderViewModel.getEmail(name);
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Ordering Coffee for " + name);
-        intent.putExtra(Intent.EXTRA_TEXT, str);
+        intent.putExtra(Intent.EXTRA_SUBJECT, email.getSubject());
+        intent.putExtra(Intent.EXTRA_TEXT, email.getBody());
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
-    }
-
-    private void updateQuantityAndPrice(View v) {
-        orderViewModel.setCreamChecked(whippedCream.isChecked());
-        orderViewModel.setChocolateChecked(chocolate.isChecked());
-        setQuantityText(orderViewModel.getNumberOfCoffees());
-        hideKeyboard(v);
-    }
-
-    private int calculatePrice() {
-        return orderViewModel.calculatePrice();
     }
 
     private void setQuantityText(int quantity) {
@@ -121,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayPrice(String message) {
         priceTv.setText(message);
+        hideKeyboard(priceTv);
     }
 
     public void hideKeyboard(View view) {
