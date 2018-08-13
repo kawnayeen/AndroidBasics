@@ -1,6 +1,7 @@
 package com.kawnayeen.justjava;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
     EditText customerName;
 
     private int numberOfCoffees;
-    private static final int BASE_PRICE = 5;
-    private static final int WHIPPED_CREAM_PRICE = 1;
-    private static final int CHOCOLATE_PRICE = 2;
+    private OrderViewModel orderViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         numberOfCoffees = 2;
+        orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
         orderBtn.setOnClickListener(v -> submitOrder());
         incrementBtn.setOnClickListener(this::incrementOrder);
         decrementBtn.setOnClickListener(this::decrementOrder);
@@ -57,23 +57,23 @@ public class MainActivity extends AppCompatActivity {
             if (!hasFocus)
                 hideKeyboard(v);
         });
+        orderViewModel.errorStream().observe(this, this::showToastMessage);
+        orderViewModel.priceStream().observe(this, this::displayPrice);
     }
 
     private void incrementOrder(View v) {
+        orderViewModel.incrementOrder();
         if (numberOfCoffees < 100) {
             numberOfCoffees++;
             updateQuantityAndPrice(v);
-        } else {
-            showToastMessage("You can't have more than 100 coffee");
         }
     }
 
     private void decrementOrder(View v) {
+        orderViewModel.decrementOrder();
         if (numberOfCoffees > 1) {
             numberOfCoffees--;
             updateQuantityAndPrice(v);
-        } else {
-            showToastMessage("You can't have less than 1 coffee");
         }
     }
 
@@ -105,29 +105,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuantityAndPrice(View v) {
-        setQuantityText(numberOfCoffees);
-        displayMessage(NumberFormat.getCurrencyInstance().format(calculatePrice()));
+        orderViewModel.setCreamChecked(whippedCream.isChecked());
+        orderViewModel.setChocolateChecked(chocolate.isChecked());
+        setQuantityText(orderViewModel.getNumberOfCoffees());
         hideKeyboard(v);
     }
 
     private int calculatePrice() {
-        return numberOfCoffees * getPricePerCup();
-    }
-
-    private int getPricePerCup() {
-        int price = BASE_PRICE;
-        if (whippedCream.isChecked())
-            price += WHIPPED_CREAM_PRICE;
-        if (chocolate.isChecked())
-            price += CHOCOLATE_PRICE;
-        return price;
+        return orderViewModel.calculatePrice();
     }
 
     private void setQuantityText(int quantity) {
         quantityTv.setText(String.valueOf(quantity));
     }
 
-    private void displayMessage(String message) {
+    private void displayPrice(String message) {
         priceTv.setText(message);
     }
 
