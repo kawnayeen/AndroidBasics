@@ -107,9 +107,9 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         WordViewHolder(View itemView, ItemClickListener itemClickListener) {
             super(itemView);
             this.itemClickListener = itemClickListener;
-            englishText = (TextView) itemView.findViewById(R.id.englishText);
-            miwokText = (TextView) itemView.findViewById(R.id.miwokText);
-            image = (ImageView) itemView.findViewById(R.id.numberImage);
+            englishText = itemView.findViewById(R.id.englishText);
+            miwokText = itemView.findViewById(R.id.miwokText);
+            image = itemView.findViewById(R.id.numberImage);
             itemView.setOnClickListener(this);
             itemView.findViewById(R.id.textContainer)
                     .setBackgroundColor(ContextCompat.getColor(itemView.getContext(), colorResourceId));

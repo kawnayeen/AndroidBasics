@@ -7,7 +7,7 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="MiwokAppBarStyle" parent="style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="MiwokAppBarStyle" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="elevation">0dp</item>
     </style>
 
