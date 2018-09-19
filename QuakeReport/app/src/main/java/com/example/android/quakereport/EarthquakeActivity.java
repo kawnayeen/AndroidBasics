@@ -1,5 +1,6 @@
 package com.example.android.quakereport;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,6 +39,7 @@ public class EarthquakeActivity extends AppCompatActivity {
     @BindView(R.id.pbHolder)
     FrameLayout pbHolder;
     EarthQuakeAdapter earthQuakeAdapter;
+    EarthquakeViewModel earthquakeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         setContentView(R.layout.earthquake_activity);
 
         ButterKnife.bind(this);
-
+        earthquakeViewModel = ViewModelProviders.of(this).get(EarthquakeViewModel.class);
         earthQuakeAdapter = new EarthQuakeAdapter(Arrays.asList());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         earthQuakeViews.setLayoutManager(layoutManager);
@@ -65,35 +67,21 @@ public class EarthquakeActivity extends AppCompatActivity {
     }
 
     private void fetchEarthQuakeData() {
-        USGSService usgsService = RestClient.getUsgsService();
-        Call<QuakeInfos> quakeInfosCall = usgsService.getQuakeInfos();
-        quakeInfosCall.enqueue(new Callback<QuakeInfos>() {
-            @Override
-            public void onResponse(Call<QuakeInfos> call, Response<QuakeInfos> response) {
-                if (response.isSuccessful()) {
-                    List<QuakeInfo> quakeInfos = Arrays.asList(response.body().quakeInfos);
-                    List<EarthQuakeInfo> infos = new ArrayList<>();
-                    for (QuakeInfo quakeInfo : quakeInfos) {
-                        infos.add(new EarthQuakeInfo(quakeInfo.properties.getMagnitude(),
-                                quakeInfo.properties.getLocation(), quakeInfo.properties.getTime()
-                                , quakeInfo.properties.getDetailsUrl()));
-                    }
-                    pbHolder.setVisibility(View.GONE);
-                    if (!infos.isEmpty()) {
-                        earthQuakeViews.setVisibility(View.VISIBLE);
-                        earthQuakeAdapter.setValues(infos);
-                        earthQuakeAdapter.notifyDataSetChanged();
-                    } else {
-                        emptyView.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    Log.i("kamarul", "fail at on response");
-                }
+        earthquakeViewModel.getQuakeInfoLiveData().observe(this, quakeInfo -> {
+            List<QuakeInfo> quakeInfoList = Arrays.asList(quakeInfo.quakeInfos);
+            List<EarthQuakeInfo> earthQuakeInfoList = new ArrayList<>();
+            for (QuakeInfo info : quakeInfoList) {
+                earthQuakeInfoList.add(new EarthQuakeInfo(info.properties.getMagnitude(),
+                        info.properties.getLocation(), info.properties.getTime()
+                        , info.properties.getDetailsUrl()));
             }
-
-            @Override
-            public void onFailure(Call<QuakeInfos> call, Throwable t) {
-                Log.i("kamarul", t.toString());
+            pbHolder.setVisibility(View.GONE);
+            if (!earthQuakeInfoList.isEmpty()) {
+                earthQuakeViews.setVisibility(View.VISIBLE);
+                earthQuakeAdapter.setValues(earthQuakeInfoList);
+                earthQuakeAdapter.notifyDataSetChanged();
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
             }
         });
     }
