@@ -25,19 +25,20 @@ import butterknife.ButterKnife;
 public abstract class WordFragment extends Fragment {
     @BindView(R.id.rvNumber)
     RecyclerView numberRecyclerView;
-
-    List<Word> words;
     int colorId;
     private WordAdapter wordAdapter;
-
-    abstract void populateWords();
+    abstract void prepareWords();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_words, container, false);
         ButterKnife.bind(this, rootView);
-        populateWords();
+        prepareWords();
+        return rootView;
+    }
+
+    protected void prepareWordList(List<Word> words) {
         wordAdapter = new WordAdapter(words, colorId, getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         numberRecyclerView.setLayoutManager(layoutManager);
@@ -45,7 +46,6 @@ public abstract class WordFragment extends Fragment {
         numberRecyclerView.addItemDecoration(decoration);
         numberRecyclerView.setHasFixedSize(true);
         numberRecyclerView.setAdapter(wordAdapter);
-        return rootView;
     }
 
     @Override
