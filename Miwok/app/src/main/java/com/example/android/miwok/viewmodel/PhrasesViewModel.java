@@ -33,6 +33,7 @@ public class PhrasesViewModel extends AndroidViewModel {
         words.add(new Word("Let’s go.", "yoowutis", R.raw.phrase_lets_go));
         words.add(new Word("Come here.", "әnni'nem", R.raw.phrase_come_here));
         phraseWordLiveData = new MutableLiveData<>();
+        phraseWordLiveData.setValue(words);
     }
 
     public LiveData<List<Word>> getPhraseLiveData() {

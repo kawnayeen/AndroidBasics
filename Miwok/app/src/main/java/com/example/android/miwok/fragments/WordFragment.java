@@ -27,6 +27,7 @@ public abstract class WordFragment extends Fragment {
     RecyclerView numberRecyclerView;
     int colorId;
     private WordAdapter wordAdapter;
+
     abstract void prepareWords();
 
     @Override
@@ -51,6 +52,7 @@ public abstract class WordFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        wordAdapter.cleanUpPlayer();
+        if (wordAdapter != null)
+            wordAdapter.cleanUpPlayer();
     }
 }
